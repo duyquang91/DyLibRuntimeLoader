@@ -1,0 +1,26 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-module-flags: -target x86_64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name DyLibRuntimeLoader
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import Darwin
+import Foundation
+import Swift
+import _Concurrency
+import _StringProcessing
+public func dyLibCreator<T, M>(factory: @autoclosure @escaping () -> T, forType: M.Type) -> Swift.UnsafeMutableRawPointer
+public func dyLibLoad<T>(withSymbol symbolName: Swift.String, fromFramework framework: DyLibRuntimeLoader.FrameworkName, forType type: T.Type) throws -> T
+public func dyLibLoad<T>(withSymbol symbolName: Swift.String, fromPath path: Swift.String, forType: T.Type) throws -> T
+public enum DynamicFrameworkLoaderError : Swift.Error {
+  case symbolNotFound
+  case failedToOpenFile(reason: Swift.String)
+  case unknow
+}
+extension DyLibRuntimeLoader.DynamicFrameworkLoaderError : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+public enum FrameworkName {
+  case xcFramework(name: Swift.String, bundle: Foundation.Bundle = .main)
+  case framework(name: Swift.String, Bundle: Foundation.Bundle = .main)
+}
