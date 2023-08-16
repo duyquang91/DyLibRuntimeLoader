@@ -1,0 +1,22 @@
+name: Swift
+
+on:
+  push:
+    branches: ["action"]
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  export_xc_framework:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: unsignedapps/swift-create-xcframework@v2.3.0
+    - name: export
+      uses: anton-yurchenko/git-release@v5.0.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        args: dylibruntimeloader.xcframework
