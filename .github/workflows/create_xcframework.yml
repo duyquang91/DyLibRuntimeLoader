@@ -12,7 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: unsignedapps/swift-create-xcframework@v2.3.0
-    - uses: actions/cache@v1.2.1
+    - uses: actions/cache/save@v3
+      id: cache
       with:
-        path: dylibruntimeloader.zip
-        key: ${{ runner.os }}
+        path: DyLibRuntimeLoader.zip
+        key: ${{ runner.os }}-${{ runner.version }}
