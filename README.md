@@ -94,19 +94,31 @@ If you setup correctly, the framework should be loaded:
 | --- | --- | --- |
 | ![](res/sc_4.png) | ![](res/sc_2.png) | ![](res/sc_3.png) |
 
-## Playground
-You can try to open the IPA package in the simulator at path: 
+## Experiment
+You can try to open the IPA package in the simulator by `sim_uuid` at path: 
 ```
-~/Library/Developer/CoreSimulator/Devices/sim_uuid/Containers/Bundle/Application/app_uuid/IPA
+~/Library/Developer/CoreSimulator/Devices/{sim_uuid}/Containers/Bundle/Application/app_uuid/IPA
 ```
-Open the `Frameworks` folder & try to delete these frameworks & restart the app:
+Open the `Frameworks` folder & try these actions & restart the app to see the results:
 
-1. Delete `DyLibRuntimeLoader` or `Interface module` framework: App will be crashed immediately because they're linked dynamically. When app is launched, iOS will load all linked dynamic frameworks, if any is missing, app will crash.   
-2. Delete `Concrete module` framework: App is launched normally because it is not linked dynamically, iOS doesn't know it is in the App's main bundle.
+|Action|Result|
+|---|---|
+|Delete `DyLibRuntimeLoader` or `Interface module` framework|App will be crashed immediately because they're linked dynamically. When app is launched, iOS will load all linked dynamic frameworks, if any is missing, app will crash.|
+|Delete `Concrete module` framework|App is launched normally because it is not linked dynamically, iOS doesn't know it is in the App's main bundle.| 
 
-The playground above is an evident for the Dynamic loading for iOS with this library. Actually, you can use the POXIS's dlfcn APIs directly, very simple. This library just abstracts & makes it more Swifty.
+The experiment above is an evident for the Dynamic loading for iOS. The Xcode & iOS doesn't even know about the `Concrete module` then they ignore them while linking & loading. We have other chance to load it manualy later.
 
-By dynamic loading, the App's launch time will be reduced significantly, especially with the bunch of dynamic frameworks! 
+```mermaid
+flowchart TD
+    X[Xcode/Bundle] -->|linking/loading| I[Interface module]
+    C[Concrete module] -->|depending| I
+```
+
+## Benefits
+We can easily preceive some benefits from this dynamic loading approach:
+
+1. By dynamic loading, the App's launch time will be reduced significantly, especially with the bunch of dynamic frameworks! 
+2. The concrete modules can be easily replaced without any observations from Xcode/iOS/App so we can change the app's behaviour or perhaps update the App on the fly!
 
 ## Appstore review
 We're using the low level APIs with limited documentations from Apple. I will use this library for my current app on the Appstore to see if we can bypass the review from Apple, will update here ASAP.
