@@ -1,0 +1,11 @@
+{
+    "name": "Swift 5.8.1",
+    "image": "swift:5.8.1",
+    "extensions": [
+      "sswg.swift-lang"
+    ],
+    "settings": {
+      "lldb.library": "/usr/lib/liblldb.so"
+    },
+    "forwardPorts": [8080]
+}
