@@ -10,23 +10,11 @@ let package = Package(
             name: "DyLibRuntimeLoader",
             type: .dynamic,
             targets: ["DyLibRuntimeLoader"]),
-//        .library(name: "DyLibSample",
-//                 type: .dynamic,
-//                 targets: ["DyLibSample"]),
-//        .library(name: "DyLibSampleInterface",
-//                 type: .dynamic,
-//                 targets: ["DyLibSampleInterface"]),
     ],
     dependencies: [],
     targets: [
         .target(
             name: "DyLibRuntimeLoader",
             dependencies: []),
-//        .target(
-//            name: "DyLibSampleInterface",
-//            dependencies: ["DyLibRuntimeLoader"]),
-//        .target(
-//            name: "DyLibSample",
-//            dependencies: ["DyLibSampleInterface"]),
     ]
 )
