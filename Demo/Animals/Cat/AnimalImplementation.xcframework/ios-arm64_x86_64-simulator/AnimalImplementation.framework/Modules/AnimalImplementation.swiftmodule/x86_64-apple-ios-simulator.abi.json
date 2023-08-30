@@ -1,0 +1,124 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "TopLevel",
+    "printedName": "TopLevel",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "DyLibRuntimeLoader",
+        "printedName": "DyLibRuntimeLoader",
+        "declKind": "Import",
+        "moduleName": "AnimalImplementation",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "AnimalInterface",
+        "printedName": "AnimalInterface",
+        "declKind": "Import",
+        "moduleName": "AnimalImplementation",
+        "declAttributes": [
+          "ImplementationOnly"
+        ]
+      },
+      {
+        "kind": "Function",
+        "name": "load",
+        "printedName": "load()",
+        "children": [
+          {
+            "kind": "TypeNominal",
+            "name": "UnsafeMutableRawPointer",
+            "printedName": "Swift.UnsafeMutableRawPointer",
+            "usr": "s:Sv"
+          }
+        ],
+        "declKind": "Func",
+        "usr": "c:(cm)load",
+        "mangledName": "$s20AnimalImplementation4loadSvyF",
+        "moduleName": "AnimalImplementation",
+        "declAttributes": [
+          "CDecl"
+        ],
+        "funcSelfKind": "NonMutating"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "Cat",
+        "printedName": "Cat",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "speak",
+            "printedName": "speak()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:20AnimalImplementation3CatV5speakSSyF",
+            "mangledName": "$s20AnimalImplementation3CatV5speakSSyF",
+            "moduleName": "AnimalImplementation",
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Cat",
+                "printedName": "AnimalImplementation.Cat",
+                "usr": "s:20AnimalImplementation3CatV"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:20AnimalImplementation3CatVACycfc",
+            "mangledName": "$s20AnimalImplementation3CatVACycfc",
+            "moduleName": "AnimalImplementation",
+            "implicit": true,
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:20AnimalImplementation3CatV",
+        "mangledName": "$s20AnimalImplementation3CatV",
+        "moduleName": "AnimalImplementation",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Animal",
+            "printedName": "Animal",
+            "usr": "s:15AnimalInterface0A0P",
+            "mangledName": "$s15AnimalInterface0A0P"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/steve.dao\/Documents\/DyLibRuntimeLoader\/Demo\/Animals\/Cat\/Sources\/AnimalImplementation\/Cat.swift",
+      "kind": "StringLiteral",
+      "offset": 323,
+      "length": 6,
+      "value": "\"meow\""
+    }
+  ]
+}
