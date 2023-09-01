@@ -159,7 +159,7 @@ let animal = try dyLibLoad(withSymbol: "load_animal", fromFramework: .framework(
 ```
 You can find this code at the Demo's ViewController: [./Demo/DynamicLoadingDemo/DynamicLoadingDemo/ViewController.swift](./Demo/DynamicLoadingDemo/DynamicLoadingDemo/ViewController.swift)
 
-> **Warning**:
+> [!WARNING]:
 > Use corresponding directory you copied the concrete framework into it, otherwise the framework can't be loaded.
 
 Now, run the Demo project to figure it out:
@@ -194,7 +194,8 @@ The experiment above is an evident for the Dynamic loading for iOS, it may not q
 We can easily preceive some benefits from this dynamic loading approach:
 
 1. As mentioned by Meta's engineers, by dynamic loading, the App's launch time will be reduced significantly, especially with the bunch of dynamic frameworks! 
-2. The implementation modules can be easily replaced without any integrity checks from Xcode/iOS so we can change the app's behaviour or perhaps update the App on the fly? Who know :D
+2. The implementation modules can hide the whole implementation & just expose as symbols, it maybe useful for some circumstances.
+3. The implementation modules can be easily replaced without any integrity checks from Xcode/iOS so we can change the app's behaviour or perhaps update the App on the fly? Who know :D
 
 ## Appstore review
 I already integrated the [DylibRuntimeLoader](https://github.com/duyquang91/DylibRuntimeloader) to my open source app: [Loan Calculator Plus](https://github.com/duyquang91/Loan-Calculator-Plus) & it's been approved by Apple. You can download it from the [Appstore](https://apps.apple.com/vn/app/loan-calculator-plus/id1501083494). It means Dynamic loading is unofficially supported by Apple but legal on Appstore. That's why Facebook app is alive till now.
