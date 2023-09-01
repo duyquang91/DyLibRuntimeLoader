@@ -159,7 +159,7 @@ let animal = try dyLibLoad(withSymbol: "load_animal", fromFramework: .framework(
 ```
 You can find this code at the Demo's ViewController: [./Demo/DynamicLoadingDemo/DynamicLoadingDemo/ViewController.swift](./Demo/DynamicLoadingDemo/DynamicLoadingDemo/ViewController.swift)
 
-> [!WARNING]:
+> **Warning** 
 > Use corresponding directory you copied the concrete framework into it, otherwise the framework can't be loaded.
 
 Now, run the Demo project to figure it out:
