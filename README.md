@@ -25,103 +25,179 @@ As the name, there're many benefits when using the [Interface modules](https://s
 For now, we only support Swift Package Manager:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/duyquang91/dylibruntimeloader", .from("1.0.0"))
+    .package(url: "https://github.com/duyquang91/DylibRuntimeloader", .from("1.0.0"))
 ]
 ```
 > **Note**
 > This is a dynamic library 
 
 ## How to use
-These steps will guide you how to use the library, you can download this repo & open the Demo project, everything is there for a quick playground.
+These steps will guide you how to use the library, you can download this repo & open the [Demo](./Demo/) project, everything is there for a quick experiment.
+
 ### Interface module
-As mentioned above, it is a best practice to use this library with the [interface module](https://swiftrocks.com/reducing-ios-build-times-by-using-interface-targets) design. First, you have to create a new dynamic framework target. Declare all public protocol here:
+As mentioned above, it is a best practice to use this library with the [Interface module](https://swiftrocks.com/reducing-ios-build-times-by-using-interface-targets) design. First, we create a new package: [AnimalInterface](./Demo/Animals/AnimalInterface) at path: [./Demo/Animals/AnimalInterface](./Demo/Animals/AnimalInterface) and declare a public protocol [Animal](./Demo/Animals/AnimalInterface/Sources/AnimalInterface/AnimalInterface.swift):
 
 ```swift
 import Foundation
 
-public protocol SampleInterface {
-    var version: String { get }
+public protocol Animal {
+    func speak() -> String
 }
-
 ```
-### Concrete module
-Create a new dynamic framework target then add the interface module & **DyLibRuntimeLoader** as a dependency. Here, we implement the requirements from the interface module:
+> **Note**
+> It must be a Dynamic library.
+
+This simple packge describes how an animal speaks
+
+### Implementation module
+
+#### Dog
+Now we create a new packge: [Dog](./Demo/Animals/Dog) at path: [./Demo/Animals/Dog/](./Demo/Animals/Dog/) then declare [AnimalInterface](./Demo/Animals/AnimalInterface) & [DylibRuntimeLoader](https://github.com/duyquang91/DyLibRuntimeLoader) as dependencies, the [Package.swift](./Demo/Animals/Dog/Package.swift) should look like this:
 
 ```swift
-import Foundation
-import DyLibSampleInterface
-import DyLibRuntimeLoader
+import PackageDescription
 
-public struct Sample: SampleInterface {
-    public var version: String {
-        "test"
+let package = Package(
+    name: "AnimalImplementation",
+    platforms: [.iOS(.v11)],
+    products: [
+        .library(
+            name: "AnimalImplementation",
+            type: .dynamic,
+            targets: ["AnimalImplementation"]),
+    ],
+    dependencies: [
+        .package(path: "../AnimalInterface"),
+        .package(path: "../../..")
+    ],
+    targets: [
+        .target(name: "AnimalImplementation", 
+                dependencies: ["AnimalInterface", "DyLibRuntimeLoader"]),
+    ]
+)
+```
+> **Note**
+> It must be a Dynamic library.
+
+Now, the Dog must conform the [Animal](./Demo/Animals/AnimalInterface/Sources/AnimalInterface/AnimalInterface.swift) interface:
+
+```swift
+import AnimalInterface
+
+struct Dog: Animal {
+    func speak() -> String {
+        "woof"
     }
 }
-
-@_cdecl("sample")
-public func sample() -> UnsafeMutableRawPointer {
-    return dyLibCreator(factory: Sample(), forType: SampleInterface.self)
-}
 ```
-> **Warning**: 
-> You have to use the `@_cdecl("sample")` attribute, otherwise we can't retrieve the symbol to this concrete implementation later. Library also mentioned this in the method's inline documentation. 
 
-Now, build & export this Concrete module to a dynamic XCFramework (or Fat framework). If you're using Swift Package Manager, can use this tool: [swift-create-xcframework](https://github.com/unsignedapps/swift-create-xcframework).
-
-### Integration
-Now, it is time to see the magic!
-
-Open your iOS project & add 2 dependencies:
-1. DyLibRuntimeLoader: Link dynamically
-2. DyLibSampleInterface: Link dynamically
-
-How about the concrete framework? We don't link it as the traditional way, our project & Xcode shouldn't see it: don't import or link it, just copy to the `Frameworks` directory by a new "Copy Files" in the "Build Phases":
-
-![](res/sc_1.png)
-
-Whenever you want to get any instances from the concrete module, just follow this method:
+You can see we don't declare [Dog](./Demo/Animals/Dog/Sources/AnimalImplementation/Dog.swift) as a public struct so when we import it into Demo project, we can't use it. The Dynamic loading technique actually will load the [Dog](./Demo/Animals/Dog/Sources/AnimalImplementation/Dog.swift) instance into the memory & cast it into public [Animal](./Demo/Animals/AnimalInterface/Sources/AnimalInterface/AnimalInterface.swift) interface. Now, let's expose our Dog instance as a symbol by using [DylibRuntimeLoader](https://github.com/duyquang91/DylibRuntimeloader)'s [dyLibCreator:](./Sources/DyLibRuntimeLoader/DyLibCreator.swift) method:
 
 ```swift
-let sample = try dyLibLoad(withSymbol: "sample", fromFramework: FrameworkName.framework(name: "DyLibSample", directory: .frameworks), forType: SampleInterface.self)
+import DyLibRuntimeLoader
+import AnimalInterface
+
+@_cdecl("load_animal")
+func load() -> UnsafeMutableRawPointer {
+    dyLibCreator(factory: Dog(), forType: Animal.self)
+}
+
+struct Dog: Animal {
+    func speak() -> String {
+        "woof"
+    }
+}
 ```
+
+> **Warning**: 
+> You have to use the `@_cdecl("load_animal")` attribute, otherwise we can't retrieve the symbol to this instance later. DylibRuntimeLoader also mentioned this in the method's inline documentation. 
+
+Now, build & export this [Dog](./Demo/Animals/Dog/Sources/AnimalImplementation/Dog.swift) package to a dynamic XCFramework (or Fat framework). If you're using Swift Package Manager, can use this tool: [swift-create-xcframework](https://github.com/unsignedapps/swift-create-xcframework). The final build is located at: [./Demo/Animals/Dog/AnimalImplementation.xcframework](Demo/Animals/Dog/AnimalImplementation.xcframework)
+
+#### Cat
+
+We repeat the quite same steps from [Dog](./Demo/Animals/Dog) package to create a dynamic package: [Cat](Demo/Animals/Cat/). The only difference is the speak method:
+
+```swift
+import DyLibRuntimeLoader
+import AnimalInterface
+
+@_cdecl("load_animal")
+func load() -> UnsafeMutableRawPointer {
+    dyLibCreator(factory: Cat(), forType: Animal.self)
+}
+
+struct Cat: Animal {
+    func speak() -> String {
+        "meow"
+    }
+}
+```
+
+You can find the final dynamic XCFramework: [./Demo/Animals/Cat/AnimalImplementation.xcframework](./Demo/Animals/Cat/AnimalImplementation.xcframework)
+
+### Integration
+Now, it is time to expirement the magic!
+
+Open the Demo project at path: [Demo/DynamicLoadingDemo/DynamicLoadingDemo.xcodeproj](Demo/DynamicLoadingDemo/DynamicLoadingDemo.xcodeproj) to check the dependencies:
+![](res/xcode.png)
+
+> **Note**
+> DyLibRuntimeLoader & DyLibSampleInterface are linked dynamically
+
+How about the implementation frameworks [Dog](./Demo/Animals/Dog) & [Cat](./Demo/Animals/Dog)? We don't link it as the traditional way like [DyLibRuntimeLoader](https://github.com/duyquang91/DyLibRuntimeLoader) & [AnimalInterface](./Demo/Animals/AnimalInterface) above, our project & Xcode shouldn't aware about it: don't link or import it, just copy it to the `Frameworks` directory by a new manual "Script" in the "Build Phases":
+
+![](res/xcode2.png)
+
+> **Note**
+> I used a script from Carthage for quick demo, you can write your own script to work with XCFramework.
+
+First, let's try to copy the [Dog](./Demo/Animals/Dog) framework. From now on, whenever we want to load the instance of [Animal](./Demo/Animals/AnimalInterface/Sources/AnimalInterface/AnimalInterface.swift), just use the [DyLibRuntimeLoader](https://github.com/duyquang91/DyLibRuntimeLoader)'s [dyLibLoad:](Sources/DyLibRuntimeLoader/DyLibRuntimeLoader.swift) method
+
+```swift
+let animal = try dyLibLoad(withSymbol: "load_animal", fromFramework: .framework(name: "AnimalImplementation"), forType: Animal.self)
+```
+You can find this code at the Demo's ViewController: [./Demo/DynamicLoadingDemo/DynamicLoadingDemo/ViewController.swift](./Demo/DynamicLoadingDemo/DynamicLoadingDemo/ViewController.swift)
 
 > **Warning**:
 > Use corresponding directory you copied the concrete framework into it, otherwise the framework can't be loaded.
 
-If you setup correctly, the framework should be loaded:
+Now, run the Demo project to figure it out:
 
-| First launch | Loaded successfully | Failed to load |
+| App is launched | Load the Dog instance | Tes the animal.speak() | 
 | --- | --- | --- |
-| ![](res/sc_4.png) | ![](res/sc_2.png) | ![](res/sc_3.png) |
+| ![](res/app.png) | ![](res/loaded.png) | ![](res/dog.png)|
 
 ## Experiment
-You can try to open the IPA package in the simulator by `sim_uuid` at path: 
+Now, close the Xcode & let's try to tamper the Demo app. Find the current booted simulator's UUID:
 ```
-~/Library/Developer/CoreSimulator/Devices/{sim_uuid}/Containers/Bundle/Application/app_uuid/IPA
+xcrun simctl list | egrep '(Booted)'
 ```
-Open the `Frameworks` folder & try these actions & restart the app to see the results:
+Then go to find our app's `Frameworks` folder:
+
+```
+~/Library/Developer/CoreSimulator/Devices/{sim_uuid}/Data/Containers/Bundle/Application/{app_uuid}/DynamicLoadingDemo/Frameworks
+```
+![](res/frameworks.png)
+
+Now try these actions by your self & restart the app to see the results:
 
 |Action|Result|
 |---|---|
-|Delete `DyLibRuntimeLoader` or `Interface module` framework|App will be crashed immediately because they're linked dynamically. When app is launched, iOS will load all linked dynamic frameworks, if any is missing, app will crash.|
-|Delete `Concrete module` framework|App is launched normally because it is not linked dynamically, iOS doesn't know it is in the App's main bundle.| 
+|Delete `DyLibRuntimeLoader` or `AnimalInterface` framework|App will be crashed immediately because they're linked dynamically. When app is launched, iOS will load all linked dynamic frameworks, if any is missing, app will be crashed.|
+|Delete `AnimalImplementation` framework|App is launched normally because Xcode is not aware about it while linking & iOS isn't aware about it as well because we run a manual script to copy it later.
+|Replace the `AnimalImplementation` framework from [./Demo/Animals/Cat/AnimalImplementation.xcframework/ios-arm64_x86_64-simulator/AnimalImplementation.framework](./Demo/Animals/Cat/AnimalImplementation.xcframework/ios-arm64_x86_64-simulator/AnimalImplementation.framework) then check how `animal.speak()` func work?|The `animal.speak()` now should notice "meow". We just bypass the iOS integrity check, tamper & change the behaviour of the App. To do this on a real device, you need to jailbreak.|
 
-The experiment above is an evident for the Dynamic loading for iOS. The Xcode & iOS doesn't even know about the `Concrete module` then they ignore them while linking & loading. We have other chance to load it manualy later.
-
-```mermaid
-flowchart TD
-    X[Xcode/Bundle] -->|linking/loading| I[Interface module]
-    C[Concrete module] -->|depending| I
-```
+The experiment above is an evident for the Dynamic loading for iOS, it may not quite exact how engineers at Meta did with [The evolution of Facebook’s iOS app architecture](https://engineering.fb.com/2023/02/06/ios/facebook-ios-app-architecture). I just try to mimic them to verify if it is really work, the result is fancy!  
 
 ## Benefits
 We can easily preceive some benefits from this dynamic loading approach:
 
-1. By dynamic loading, the App's launch time will be reduced significantly, especially with the bunch of dynamic frameworks! 
-2. The concrete modules can be easily replaced without any observations from Xcode/iOS/App so we can change the app's behaviour or perhaps update the App on the fly!
+1. As mentioned by Meta's engineers, by dynamic loading, the App's launch time will be reduced significantly, especially with the bunch of dynamic frameworks! 
+2. The implementation modules can be easily replaced without any integrity checks from Xcode/iOS so we can change the app's behaviour or perhaps update the App on the fly? Who know :D
 
 ## Appstore review
-We're using the low level APIs with limited documentations from Apple. I will use this library for my current app on the Appstore to see if we can bypass the review from Apple, will update here ASAP.
+I already integrated the [DylibRuntimeLoader](https://github.com/duyquang91/DylibRuntimeloader) to my open source app: [Loan Calculator Plus](https://github.com/duyquang91/Loan-Calculator-Plus) & it's been approved by Apple. You can download it from the [Appstore](https://apps.apple.com/vn/app/loan-calculator-plus/id1501083494). It means Dynamic loading is unofficially supported by Apple but legal on Appstore. That's why Facebook app is alive till now.
 
 
 
