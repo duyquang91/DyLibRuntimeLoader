@@ -17,7 +17,18 @@ class ViewController: UIViewController {
 
     @IBAction func load(sender: UIButton) {
         do {
-            animal = try dyLibLoad(withSymbol: "load_animal", fromFramework: .framework(name: "AnimalImplementation"), forType: Animal.self)
+            // Dynamic load framework first then load class from string
+            try dyLibLoad(fromFramework: .framework(name: "AnimalImplementation"))
+            if let dog = NSClassFromString("AnimalImplementation.Dog") as? AnimalClass.Type {
+                animal = dog.init()
+            } else if let cat = NSClassFromString("AnimalImplementation.Cat") as? AnimalClass.Type {
+                animal = cat.init()
+            } else {
+                show(title: "Error", message: "AnimalImplementation Classes are not found")
+            }
+
+            // Load instance directly from symbol
+//             animal = try dyLibLoad(withSymbol: "load_animal", fromFramework: .framework(name: "AnimalImplementation"), forType: Animal.self)
             show(title: "Success", message: "Animal implementation is loaded")
         } catch {
             show(title: "Error", message: error.localizedDescription)

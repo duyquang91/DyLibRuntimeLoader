@@ -18,6 +18,6 @@ import Foundation
 ///   - factory: Return the concrete implementation of protocol type
 ///   - forType: Protocol type
 /// - Returns: `UnsafeMutableRawPointer` which will be handle of the loader later
-public func dyLibCreator<T, M>(factory: @autoclosure @escaping () -> T, forType: M.Type) -> UnsafeMutableRawPointer where T == M {
-    return Unmanaged.passRetained(DyLibBuilder<M>(factory: factory())).toOpaque()
+public func dyLibCreator<T>(factory: @autoclosure @escaping () -> T, forType: T.Type) -> UnsafeMutableRawPointer {
+    return Unmanaged.passRetained(DyLibBuilder<T>(factory: factory())).toOpaque()
 }

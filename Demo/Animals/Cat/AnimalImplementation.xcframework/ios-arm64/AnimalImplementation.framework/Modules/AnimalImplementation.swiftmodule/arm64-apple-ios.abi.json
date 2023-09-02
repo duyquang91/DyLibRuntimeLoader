@@ -19,10 +19,7 @@
         "name": "AnimalInterface",
         "printedName": "AnimalInterface",
         "declKind": "Import",
-        "moduleName": "AnimalImplementation",
-        "declAttributes": [
-          "ImplementationOnly"
-        ]
+        "moduleName": "AnimalImplementation"
       },
       {
         "kind": "Function",
@@ -51,6 +48,28 @@
         "printedName": "Cat",
         "children": [
           {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Cat",
+                "printedName": "AnimalImplementation.Cat",
+                "usr": "s:20AnimalImplementation3CatC"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:20AnimalImplementation3CatCACycfc",
+            "mangledName": "$s20AnimalImplementation3CatCACycfc",
+            "moduleName": "AnimalImplementation",
+            "overriding": true,
+            "declAttributes": [
+              "Required"
+            ],
+            "init_kind": "Designated"
+          },
+          {
             "kind": "Function",
             "name": "speak",
             "printedName": "speak()",
@@ -63,35 +82,27 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:20AnimalImplementation3CatV5speakSSyF",
-            "mangledName": "$s20AnimalImplementation3CatV5speakSSyF",
+            "usr": "s:20AnimalImplementation3CatC5speakSSyF",
+            "mangledName": "$s20AnimalImplementation3CatC5speakSSyF",
             "moduleName": "AnimalImplementation",
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Constructor",
-            "name": "init",
-            "printedName": "init()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Cat",
-                "printedName": "AnimalImplementation.Cat",
-                "usr": "s:20AnimalImplementation3CatV"
-              }
+            "overriding": true,
+            "isOpen": true,
+            "declAttributes": [
+              "Override"
             ],
-            "declKind": "Constructor",
-            "usr": "s:20AnimalImplementation3CatVACycfc",
-            "mangledName": "$s20AnimalImplementation3CatVACycfc",
-            "moduleName": "AnimalImplementation",
-            "implicit": true,
-            "init_kind": "Designated"
+            "funcSelfKind": "NonMutating"
           }
         ],
-        "declKind": "Struct",
-        "usr": "s:20AnimalImplementation3CatV",
-        "mangledName": "$s20AnimalImplementation3CatV",
+        "declKind": "Class",
+        "usr": "s:20AnimalImplementation3CatC",
+        "mangledName": "$s20AnimalImplementation3CatC",
         "moduleName": "AnimalImplementation",
+        "isOpen": true,
+        "superclassUsr": "s:15AnimalInterface0A5ClassC",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "AnimalInterface.AnimalClass"
+        ],
         "conformances": [
           {
             "kind": "Conformance",
@@ -99,13 +110,6 @@
             "printedName": "Animal",
             "usr": "s:15AnimalInterface0A0P",
             "mangledName": "$s15AnimalInterface0A0P"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Sendable",
-            "printedName": "Sendable",
-            "usr": "s:s8SendableP",
-            "mangledName": "$ss8SendableP"
           }
         ]
       }
@@ -116,7 +120,7 @@
     {
       "filePath": "\/Users\/steve.dao\/Documents\/DyLibRuntimeLoader\/Demo\/Animals\/Cat\/Sources\/AnimalImplementation\/Cat.swift",
       "kind": "StringLiteral",
-      "offset": 323,
+      "offset": 338,
       "length": 6,
       "value": "\"meow\""
     }

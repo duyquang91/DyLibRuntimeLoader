@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A694B0F2AA3354A00EA3BF9 /* AnimalImplementation.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5A694B0E2AA3354A00EA3BF9 /* AnimalImplementation.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5A6DB02C2A9F1E1F00E87643 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6DB02B2A9F1E1F00E87643 /* AppDelegate.swift */; };
 		5A6DB02E2A9F1E1F00E87643 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6DB02D2A9F1E1F00E87643 /* SceneDelegate.swift */; };
 		5A6DB0302A9F1E1F00E87643 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6DB02F2A9F1E1F00E87643 /* ViewController.swift */; };
@@ -16,7 +17,6 @@
 		5A6DB0442A9F1E5500E87643 /* AnimalInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 5A6DB0432A9F1E5500E87643 /* AnimalInterface */; };
 		5A6DB0462A9F1E5B00E87643 /* DyLibRuntimeLoader in Frameworks */ = {isa = PBXBuildFile; productRef = 5A6DB0452A9F1E5B00E87643 /* DyLibRuntimeLoader */; };
 		5A6DB0472A9F1E5B00E87643 /* DyLibRuntimeLoader in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 5A6DB0452A9F1E5B00E87643 /* DyLibRuntimeLoader */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		5A87A9D82AA2F7EF009D97BF /* AnimalImplementation.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5A87A9D72AA2F7EF009D97BF /* AnimalImplementation.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5AC3E0112A9F216B00BBD9F9 /* AnimalInterface in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 5A6DB0432A9F1E5500E87643 /* AnimalInterface */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -39,13 +39,15 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5A87A9D82AA2F7EF009D97BF /* AnimalImplementation.xcframework in CopyFiles */,
+				5A694B0F2AA3354A00EA3BF9 /* AnimalImplementation.xcframework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5A694B0C2AA332D800EA3BF9 /* AnimalImplementation.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AnimalImplementation.xcframework; path = ../Animals/Cat/AnimalImplementation.xcframework; sourceTree = "<group>"; };
+		5A694B0E2AA3354A00EA3BF9 /* AnimalImplementation.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AnimalImplementation.xcframework; path = ../Animals/Dog/AnimalImplementation.xcframework; sourceTree = "<group>"; };
 		5A6DB0282A9F1E1F00E87643 /* DynamicLoadingDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DynamicLoadingDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A6DB02B2A9F1E1F00E87643 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A6DB02D2A9F1E1F00E87643 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +79,8 @@
 			isa = PBXGroup;
 			children = (
 				5A87A9D72AA2F7EF009D97BF /* AnimalImplementation.xcframework */,
+				5A694B0C2AA332D800EA3BF9 /* AnimalImplementation.xcframework */,
+				5A694B0E2AA3354A00EA3BF9 /* AnimalImplementation.xcframework */,
 				5A87A9D52AA2F775009D97BF /* AnimalImplementation.framework */,
 				5A6DB03F2A9F1E3100E87643 /* Packages */,
 				5A6DB02A2A9F1E1F00E87643 /* DynamicLoadingDemo */,

@@ -6,6 +6,20 @@ import Darwin
 
 typealias InitFunction = @convention(c) () -> UnsafeMutableRawPointer
 
+
+/// Load whole library, useful for using `NSClassFromString` method
+/// - Parameter framework: ynamic framework hosts the dynamic library
+/// - Throws: DynamicFrameworkLoaderError
+public func dyLibLoad(fromFramework framework: FrameworkName) throws {
+    dyLibLoad(fromPath: try framework.getAppendFilePath())
+}
+
+/// Load whole library, useful for using `NSClassFromString` method
+/// - Parameter fromPath: path to the dynamic library
+public func dyLibLoad(fromPath: String) {
+    dlopen(fromPath, RTLD_LAZY)
+}
+
 /// Load a concrete implementation from dynamic library.
 /// - Parameters:
 ///   - symbolName: symbol name of the method in the library which return the concrete implementation
@@ -14,8 +28,8 @@ typealias InitFunction = @convention(c) () -> UnsafeMutableRawPointer
 /// - Throws: DynamicFrameworkLoaderError
 /// - Returns: concrete implementation of protocol type
 public func dyLibLoad<T>(withSymbol symbolName: String,
-                                     fromFramework framework: FrameworkName,
-                                     forType type: T.Type) throws -> T {
+                         fromFramework framework: FrameworkName,
+                         forType type: T.Type) throws -> T {
     return try dyLibLoad(withSymbol: symbolName, fromPath: try framework.getAppendFilePath(), forType: type)
 }
 
@@ -32,10 +46,6 @@ public func dyLibLoad<T>(withSymbol symbolName: String,
 
     let openRes = dlopen(path, RTLD_LAZY)
     if openRes != nil {
-        defer {
-            dlclose(openRes)
-        }
-
         let sym = dlsym(openRes, symbolName)
 
         if sym != nil {

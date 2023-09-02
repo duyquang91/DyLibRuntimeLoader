@@ -9,8 +9,9 @@ func load() -> UnsafeMutableRawPointer {
     dyLibCreator(factory: Cat(), forType: Animal.self)
 }
 
-struct Cat: Animal {
-    func speak() -> String {
+class Cat: AnimalClass {
+    required init() {}
+    override func speak() -> String {
         "meow"
     }
 }
