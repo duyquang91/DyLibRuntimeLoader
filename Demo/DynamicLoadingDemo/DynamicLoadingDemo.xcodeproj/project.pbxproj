@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,7 @@
 		5A6DB0442A9F1E5500E87643 /* AnimalInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 5A6DB0432A9F1E5500E87643 /* AnimalInterface */; };
 		5A6DB0462A9F1E5B00E87643 /* DyLibRuntimeLoader in Frameworks */ = {isa = PBXBuildFile; productRef = 5A6DB0452A9F1E5B00E87643 /* DyLibRuntimeLoader */; };
 		5A6DB0472A9F1E5B00E87643 /* DyLibRuntimeLoader in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 5A6DB0452A9F1E5B00E87643 /* DyLibRuntimeLoader */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5A87A9D82AA2F7EF009D97BF /* AnimalImplementation.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5A87A9D72AA2F7EF009D97BF /* AnimalImplementation.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5AC3E0112A9F216B00BBD9F9 /* AnimalInterface in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 5A6DB0432A9F1E5500E87643 /* AnimalInterface */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,16 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5A87A9D42AA2F74C009D97BF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5A87A9D82AA2F7EF009D97BF /* AnimalImplementation.xcframework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +56,8 @@
 		5A6DB0392A9F1E2100E87643 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A6DB0402A9F1E3100E87643 /* AnimalInterface */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AnimalInterface; path = ../Animals/AnimalInterface; sourceTree = "<group>"; };
 		5A6DB0412A9F1E4A00E87643 /* DyLibRuntimeLoader */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DyLibRuntimeLoader; path = ../..; sourceTree = "<group>"; };
+		5A87A9D52AA2F775009D97BF /* AnimalImplementation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AnimalImplementation.framework; path = "../Animals/Dog/AnimalImplementation.xcframework/ios-arm64/AnimalImplementation.framework"; sourceTree = "<group>"; };
+		5A87A9D72AA2F7EF009D97BF /* AnimalImplementation.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AnimalImplementation.xcframework; path = ../Animals/Dog/AnimalImplementation.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +76,8 @@
 		5A6DB01F2A9F1E1F00E87643 = {
 			isa = PBXGroup;
 			children = (
+				5A87A9D72AA2F7EF009D97BF /* AnimalImplementation.xcframework */,
+				5A87A9D52AA2F775009D97BF /* AnimalImplementation.framework */,
 				5A6DB03F2A9F1E3100E87643 /* Packages */,
 				5A6DB02A2A9F1E1F00E87643 /* DynamicLoadingDemo */,
 				5A6DB0292A9F1E1F00E87643 /* Products */,
@@ -119,7 +134,7 @@
 				5A6DB0252A9F1E1F00E87643 /* Frameworks */,
 				5A6DB0262A9F1E1F00E87643 /* Resources */,
 				5A6DB0482A9F1E5B00E87643 /* Embed Frameworks */,
-				5A6DB0492A9F1FDE00E87643 /* ShellScript */,
+				5A87A9D42AA2F74C009D97BF /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -150,7 +165,7 @@
 				};
 			};
 			buildConfigurationList = 5A6DB0232A9F1E1F00E87643 /* Build configuration list for PBXProject "DynamicLoadingDemo" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -179,28 +194,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		5A6DB0492A9F1FDE00E87643 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/../Animals/Dog/AnimalImplementation.xcframework/ios-arm64_x86_64-simulator/AnimalImplementation.framework",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/AnimalImplementation.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/opt/homebrew/bin/carthage copy-frameworks\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5A6DB0242A9F1E1F00E87643 /* Sources */ = {
@@ -356,6 +349,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8C98S3WY53;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DynamicLoadingDemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -363,6 +357,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -383,6 +378,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8C98S3WY53;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DynamicLoadingDemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -390,6 +386,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

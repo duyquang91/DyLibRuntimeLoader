@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -32,6 +33,12 @@
                                     <action selector="speakWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yeF-Jz-1KB"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="location" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rq4-dK-swg">
+                                <rect key="frame" x="16" y="372.33333333333331" width="361" height="20.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -39,9 +46,16 @@
                             <constraint firstItem="CYa-i2-b7w" firstAttribute="top" secondItem="pp1-QY-pcm" secondAttribute="bottom" constant="16" id="KDM-Xb-RMB"/>
                             <constraint firstItem="pp1-QY-pcm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Uir-tI-Y9p"/>
                             <constraint firstItem="CYa-i2-b7w" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="X40-n3-PAA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rq4-dK-swg" secondAttribute="trailing" constant="16" id="hiT-ZU-c1k"/>
+                            <constraint firstItem="rq4-dK-swg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="jgK-mn-NCT"/>
+                            <constraint firstItem="pp1-QY-pcm" firstAttribute="top" secondItem="rq4-dK-swg" secondAttribute="bottom" constant="16" id="nxV-80-2tl"/>
                             <constraint firstItem="pp1-QY-pcm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pYR-6b-knT"/>
+                            <constraint firstItem="rq4-dK-swg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tyM-TI-fz8"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="lbl" destination="rq4-dK-swg" id="5g1-Sn-8oT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
